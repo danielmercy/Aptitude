@@ -30,3 +30,4 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 # Aptitude
 An aptitude test web app with offline capabilities
 >>>>>>> 24b47b5c5be9c590d6bc322f9b50cf77eb8ce248
+
