@@ -11,7 +11,7 @@ const routes: Routes = [
   },{
     path: 'user/:uid',
     component: UserProfileComponent,
-    // canActivate: [AuthGaurd]
+    canActivate: [AuthGaurd]
   }
 ];
 

@@ -1,72 +1,86 @@
-<mat-toolbar>
-    <span class="logo"></span>
-    <span class="spaced"></span>
-    <button mat-icon-button (click)="onClick" *ngIf="isOnline">
-      <mat-icon class="mat-18">cloud</mat-icon>
-    </button>
-    <button mat-icon-button (click)="onClick" *ngIf="!isOnline">
-      <mat-icon class="mat-18">sound</mat-icon>
-    </button>
-
-    <div *ngIf="auth.user | async; then authenticated else login"></div>
-
-    <ng-template #authenticated>
-      <div *ngIf="auth.user | async as user">
-        <a mat-icon-button [matMenuTriggerFor]="menuRef">
-          <img [src]="user.photoURL" alt="" width="50px">
-        </a>
-        
-        <mat-menu #menuRef="matMenu">
-            <button mat-menu-item (click)="showProfile(user.uid)">
-                view profile 
-            </button>
-            <hr>
-            <button mat-menu-item (click)="auth.signOut()">
-                sign out
-            </button>
-        </mat-menu>
-      </div>
-    </ng-template>
-
-    <ng-template #login>
-      <button mat-icon-button [matMenuTriggerFor]="menuRef">
-        <mat-icon class="mat-18">more_vert</mat-icon>
+<section class="header">
+  <mat-toolbar>
+      <span class="logo"></span>
+      <span class="spaced"></span>
+      <button mat-icon-button (click)="onClick" *ngIf="isOnline">
+        <mat-icon class="mat-18">cloud</mat-icon>
       </button>
-      
-      <mat-menu #menuRef="matMenu">
-          <button mat-menu-item (click)="auth.googleLogin()">
-              sign in with google
+      <button mat-icon-button (click)="onClick" *ngIf="!isOnline">
+        <mat-icon class="mat-18">sound</mat-icon>
+      </button>
+
+      <div *ngIf="auth.user | async; then authenticated else login"></div>
+
+      <ng-template #authenticated>
+        <div *ngIf="auth.user | async as user">
+          <a mat-icon-button [matMenuTriggerFor]="menuRef">
+            <img [src]="user.photoURL" alt="" width="30px" style="border-radius: 50px;">
+          </a>
+          
+          <mat-menu #menuRef="matMenu" yPosition="below" [overlapTrigger]="false" dense>
+              <button mat-menu-item (click)="showProfile(user.uid)">Dashboard</button>
+              <button mat-menu-item (click)="auth.signOut()">sign out</button>
+          </mat-menu>
+        </div>
+      </ng-template>
+
+      <ng-template #login>
+        <button mat-icon-button [matMenuTriggerFor]="menuRef">
+          <mat-icon class="mat-18">account_circle</mat-icon>
+        </button>
+
+        <mat-menu #menuRef="matMenu" yPosition="below" [overlapTrigger]="false" dense>
+          <!-- <button mat-menu-item (click)="auth.googleLogin()">
+              <mat-icon svgIcon="google-svg"></mat-icon> google
           </button>
           <button mat-menu-item (click)="auth.facebookLogin()">
-              sign in with facebook
-          </button>
-      </mat-menu>
-    </ng-template>
-    
-</mat-toolbar>
+              <mat-icon svgIcon="facebook-svg" color="primary"></mat-icon> facebook
+          </button> -->
+        </mat-menu>
+      </ng-template>
+      
+  </mat-toolbar>
 
-<div class="hero">
-  <div class="overlay">
-    <div class="hero-content">
-      <div class="text">
-        <h3><span class="logo"></span><sup style="color: #333"> <small><b>TM</b></small> </sup> a generation of intelligent people</h3>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptate fugit id quo, exercitationem ab ratione maiores quis vero. Aliquam aut harum ea mollitia aperiam ut necessitatibus molestias repellat quo atque.</p>
-        <p><b>Sign in to get started...</b></p>
-      </div>
-      <div class="buttons">
-        <button mat-raised-button (click)="auth.googleLogin()"  class="google">
-            <span>Google</span>
-        </button>
-        <button mat-raised-button (click)="auth.facebookLogin()" class="fb">
-            <span>Facebook</span>
-        </button>
-      </div>
-      </div>
+  <div class="hero">
+    <div class="overlay">
+      <div class="hero-content">
+        <div class="text">
+          <h3 style="font-family: 'Lobster', cursive;"><span class="logo"></span><sup style="color: #333"> <small><b>TM</b></small> </sup><br><br>  <span style="color: #272829;"> A generation of intelligent people </span></h3>
+          <p style="font-family: 'Ubuntu Condensed', sans-serif;">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptate fugit id quo, exercitationem ab ratione maiores quis vero. Aliquam aut harum ea mollitia aperiam ut necessitatibus molestias repellat quo atque.</p>
+          
+        </div>
+        <div class="buttons" *ngIf="auth.user">
+            <div *ngIf="auth.user | async; then subauthenticated else sublogin"></div>
+            <ng-template #sublogin>
+                <button mat-raised-button (click)="auth.googleLogin()"  class="white">
+                    <mat-icon svgIcon="google-svg"></mat-icon>
+                    <span>Google</span>
+                </button>
+                <button mat-raised-button (click)="auth.facebookLogin()" class="fb">
+                    <mat-icon svgIcon="facebook-svg"></mat-icon>
+                    <span>Facebook</span>
+                </button>
+            </ng-template>
+
+            <ng-template #subauthenticated>
+                <button mat-raised-button   class="google">
+                    <span>Take test</span>
+                    <mat-icon class="mat-18">arrow_forward</mat-icon>
+                </button>
+            </ng-template>
+            
+          </div>
+        </div>
+    </div>
+    <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+      <polygon fill="#eee" points="0,100 100,0 100,100"/>
+    </svg> -->
   </div>
-  <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
-    <polygon fill="#eee" points="0,100 100,0 100,100"/>
-  </svg> -->
-</div>
+</section>
+
+<section class="content" style="height: 50vh;">
+
+</section>
 
 
 
